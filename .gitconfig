@@ -1,0 +1,80 @@
+[user]
+	name = honggaruy
+	email = honggaruy@gmail.com
+[color]
+	ui = auto
+[alias]
+	alias = "!# Prints all aliases.;\n\
+		git config --list \
+		| egrep '^alias.+' \
+		| sed -e 's/^alias\\.//' \
+		| sed -e 's/^[^=]*=/\\'$'\\033[31m&\\033[(B\\033[m/' \
+		| column -t -s'=' \
+		| sed 's/!#* *//; s/;$//' \
+		| cut -c1-85"
+
+	alias-basic = "!#-------------------------------;\n\
+	  git alias | head -7"
+	co = checkout
+	s  = status
+	sc = "!# status 후 변경 종류별 Count;\n\
+		git status -s \
+		| sort \
+		| sed 's/^\\sA\\s/not_updated /;\
+		       s/^M[ MD]\\s/updated_in_index /; \
+		       s/^[ MARC]M\\s/work_tree_changed_since_index /; \
+		       s/^[ MARC]D\\s/deleted_in_work_tree /; \
+		       s/^??\\s/untracked /; \
+		       s/^[ D]R\\s/renamed_in_work_tree /' \
+		| awk '{print $1}' \
+		| uniq -c"
+	dftd = "!# Modified만 difftool한다;\n\
+		git difftool --diff-filter=M"
+
+	alias-log = "!#-------------------------------;\n\
+	  git alias | egrep 'log|commit-'" 
+	l = "!# 로그 명령 짧은 형태;\n\
+		git log \
+		--color --graph --decorate \
+		--date=format:'%Y-%m-%d' \
+		--abbrev-commit \
+		--pretty=format:'%C(red)%h%C(auto)%d %s %C(green)(%cr)%C(bold blue) %an'"
+	ll = "!# 로그 명령 긴 형태;\n\
+		git log \
+		--color --graph --decorate \
+		--date=format:'%Y-%m-%d' \
+		--abbrev-commit \
+		--pretty=format:'%C(red)%H%C(auto)%d %s %C(green)(%cr)%C(bold blue) %an'"
+
+	alias-branch = "!#-------------------------------;\n\
+	    git alias | egrep '[bB]ranch'" 
+	b0 = "!# Print current branch.;\n\
+		git branch | gawk '/^\\*/{print $2}'"
+[core]
+	quotepath = off
+	autocrlf = true
+	editor = 'c:/Utils/Vim/vim82/gvim.exe' -f -i NONE
+[diff]
+	tool = diffmerge
+	# tool = winmerge
+[difftool "winmerge"]
+	cmd = C:/Program\\ Files/WinMerge/WinMergeU.exe -e \"$LOCAL\" \"$REMOTE\"
+[difftool "diffmerge"]
+	cmd = D:/App/DiffMerge/sgdm.exe \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = diffmerge
+	# tool = winmerge
+[mergetool "winmerge"]
+	cmd = C:/Program\\ Files/WinMerge/WinMergeU.exe -e -u -dl \"Local\" -dm \"Base\" -dr \"Remote\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" -o \"$MERGED\"
+	trustExitCode = true
+	keepBackup = false
+[mergetool "diffmerge"]
+	trustExitCode = true
+	cmd = D:/App/DiffMerge/sgdm.exe -merge -result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[mergetool]
+	keepBackup = false
+[winUpdater]
+	recentlySeenVersion = 2.25.0.windows.1
+[i18n]
+	commitEncoding = utf8
+	logOutputEncoding = utf8

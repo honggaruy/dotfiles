@@ -1,0 +1,10 @@
+snippet t1 "A simple HTML tag" b
+<${1:div}>
+   Hello World
+</${1/(\w+).*/$1/}>
+endsnippet
+
+snippet mytd "This is a TODO reminder" b
+<!-- TODO: ${1:desc} `!v strftime("%c")` -->
+endsnippet
+

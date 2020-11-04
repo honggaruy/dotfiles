@@ -1,0 +1,28 @@
+snippet t1 "A simple HTML tag" b
+<${1:div}>
+   Hello World
+</${1/(\w+).*/$1/}>
+endsnippet
+
+snippet mytd "This is a TODO reminder" b
+<!-- TODO: ${1:desc} `!v strftime("%c")` -->
+endsnippet
+
+# inspired by vim-es6
+snippet btn "simple button" b
+    <button onClick={${1}}>
+      {${2}}
+    </button>
+endsnippet
+
+## for React
+snippet classreact "React Class" b
+class ${1:name} extends React.Component {
+  constructor(props) {
+    super(props);
+    ${2:// init}
+  }
+  ${3: // init2}
+}
+endsnippet
+

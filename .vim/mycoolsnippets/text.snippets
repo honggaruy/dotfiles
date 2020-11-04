@@ -1,0 +1,56 @@
+global !p
+from snippet_helpers import fraction
+endglobal
+
+snippet 75wrds "Log a 750words.com session" b
+750words.com: ${1:750} words in ${2:20} minutes - `!p
+snip.rv = fraction(t[1], t[2])
+` wpm
+endsnippet
+
+snippet title "Titelize in the Transformation"
+${1:a text}
+${1/\w+\s*/\u$0/g}
+endsnippet
+
+snippet cond
+${1:some_text}${1/(o)|(t)|..*/(?1:ne)(?2:wo)/}
+endsnippet
+
+snippet ri "rizer" i
+rizer
+endsnippet
+
+snippet "chap?t?e?r?" "Latex chapter" rb
+\section{chapter}
+   $0
+\end{chapter}
+endsnippet
+
+snippet simp "Simple" !b
+`!p snip.rv = "Hello"`
+endsnippet
+
+snippet uuid "UUID" !b
+`!p import uuid
+if not snip.c:
+    snip.rv = uuid.uuid4().hex`
+endsnippet
+
+global !p
+def complete(t, opts):
+    if t:
+       opts = [ m[len(t):] for m in opts if m.startswith(t) ]
+    if len(opts) == 1:
+       return opts[0]
+    return "(" + '|'.join(opts) + ')'
+endglobal
+
+snippet '^ st' "Status" r
+ status $1`!p snip.rv=complete(t[1], ['new','incomplete','invalid'])`
+endsnippet
+
+snippet "rep (\d+) (\w+)" "Repeat" r
+`!p snip.rv = int(match.group(1))*match.group(2)`
+endsnippet
+

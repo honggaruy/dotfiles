@@ -1,0 +1,13 @@
+# git 으로 받아올 수 있는 minpac 폴더는 넣을 필요 없음
+# 참조 :  https://github.com/k-takata/minpac#installation
+/.vim/pack/minpac
+/.vim/sessions
+# python 파일에서 빌드되는 바이너리 저장
+/.vim/pythonx/__pycache__
+
+# Local configuration files
+*.local
+
+# temp files
+*.un~
+*.swp

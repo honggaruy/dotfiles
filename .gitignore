@@ -2,7 +2,7 @@
 # 참조 :  https://github.com/k-takata/minpac#installation
 /.vim/pack/minpac
 /.vim/sessions
-# python 파일에서 빌드되는 바이너리 저장
+# python 파일에서 빌드되는 바이너리는 제외함 
 /.vim/pythonx/__pycache__
 
 # Local configuration files

@@ -42,6 +42,7 @@ filetype off
 set encoding=utf-8
 set langmenu=ko_kr.utf-8
 set fileencodings=utf-8,cp949
+let g:session_autoload = 'no'
 
 """"""""""""""""""""""""""""""""
 "  Python Enviroment Settings  "
@@ -111,6 +112,9 @@ function! PackInit() abort
 	call minpac#add('honza/vim-snippets')
 	call minpac#add('isRuslan/vim-es6')
 	call minpac#add('cjrh/vim-conda')
+
+	" Always load the vim-devicons as the very last one. - vim-devions
+	call minpac#add('ryanoasis/vim-devicons')
 
 endfunction
 
@@ -192,10 +196,10 @@ let g:vimwiki_list=[
     \   'path': 'd:/repository/honggaruy.github.io/_wiki/',
     \   'syntax' : 'markdown',
     \   'ext' : '.md',
-    \   'diary_rel_path': '.',
+    \   'diary_rel_path': '../posts/',
     \},
     \{
-    \   'path': '~/localwiki',
+    \   'path': 'd:/repository/honggaruy.github.io/_posts/',
     \   'syntax' : 'markdown',
     \   'ext' : '.md',
     \   'diary_rel_path': '.',
@@ -218,6 +222,14 @@ nnoremap <S-F4> :execute "VWB" <Bar> :lopen<CR>
 """ mhinz/vim-startify Configuration
 " The directory to save/load session to/from.
 let g:startify_session_dir='~/.vim/sessions'
+let g:startify_lists = [
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+    \]
+let g:startify_bookmarks = [ {'c': '~/.vimrc'}, 'd:/repository/' ]
 
 """ vim-javascript Configuration
 " github home: https://github.com/pangloss/vim-javascript
@@ -228,6 +240,12 @@ let g:javascript_plugin_jsdoc = 1
 " jsx 문법의 하이라이팅과 인덴트를 지원해주는 플러그인
 " *.jsx 뿐만 아니라 *.js에도 적용하도록 하는 구문.
 let g:jsx_ext_required = 0
+
+""" vim-devicons 설정
+" vim에서 다양한 icons을 사용할 수 있도록 해줌
+let g:airline_powerline_fonts = 1
+let g:wedevicons_enable_startify = 1
+let g:wedevicons_enable_nerdtree = 1
 
 "" 단축키 등록 
 """ 설정파일 쉽게 열기 -- 시작 

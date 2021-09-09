@@ -28,8 +28,10 @@
 		       s/^[ D]R\\s/renamed_in_work_tree /' \
 		| awk '{print $1}' \
 		| uniq -c"
-	dftd = "!# Modified만 difftool한다;\n\
+	dftd = "!# Modified만 difftool한다. add전에 변경 내용 확인;\n\
 		git difftool --diff-filter=M"
+	dfs = "!# Staged만 difftool한다. add이후 commit전에 확인;\n\
+		git difftool --staged"
 
 	alias-log = "!#-------------------------------;\n\
 	  git alias | egrep 'log|commit-'" 
@@ -55,15 +57,21 @@
 	autocrlf = true
 	editor = 'c:/Utils/Vim/vim82/gvim.exe' -f -i NONE
 [diff]
-	tool = diffmerge
+	tool = beyondcompare4
 	# tool = winmerge
+[difftool "beyondcompare4"]
+	cmd = C:/Program\\ Files/Beyond\\ Compare\\ 4/BComp.exe \"$LOCAL\" \"$REMOTE\"
 [difftool "winmerge"]
 	cmd = C:/Program\\ Files/WinMerge/WinMergeU.exe -e \"$LOCAL\" \"$REMOTE\"
 [difftool "diffmerge"]
 	cmd = D:/App/DiffMerge/sgdm.exe \"$LOCAL\" \"$REMOTE\"
 [merge]
-	tool = diffmerge
+	tool = beyondcompare4
 	# tool = winmerge
+[mergetool "beyondcompare4"]
+	cmd = C:/Program\\ Files/Beyond\\ Compare\\ 4/BComp.exe \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+	trustExitCode = true
+	keepBackup = false
 [mergetool "winmerge"]
 	cmd = C:/Program\\ Files/WinMerge/WinMergeU.exe -e -u -dl \"Local\" -dm \"Base\" -dr \"Remote\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" -o \"$MERGED\"
 	trustExitCode = true

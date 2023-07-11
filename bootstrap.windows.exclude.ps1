@@ -31,7 +31,7 @@ function MakeSymLinks {
         # [How to set the default argument to an array](https://stackoverflow.com/a/44750445/9457247)
         # 굳이 파라메터로 할 필요는 없었으나 연습삼아 해봄.
         # dotfiles 폴더에서 LinK 만들기를 제외해야할 파일이 생긴다면 이곳에 등록한다.
-        [array]$NotForLinks = @("*.un~", ".gitignore", "*.exclude.*", "*.csv")
+        [array]$NotForLinks = @("*.un~", ".gitignore", "*.exclude.*", "*.csv", "README.md")
     )
     BEGIN {
         # "현재 폴더에서 NotForLinks를 제외한 등록대상 파일들을 읽어온다."

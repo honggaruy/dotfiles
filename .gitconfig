@@ -54,8 +54,9 @@
 		git branch | gawk '/^\\*/{print $2}'"
 [core]
 	quotepath = off
-	autocrlf = true
+	autocrlf = false
 	editor = 'c:/Utils/Vim/vim82/gvim.exe' -f -i NONE
+	eol = lf
 [diff]
 	tool = beyondcompare4
 	# tool = winmerge

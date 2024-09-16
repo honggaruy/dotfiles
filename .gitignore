@@ -4,6 +4,8 @@
 /.vim/sessions
 # python 파일에서 빌드되는 바이너리는 제외함 
 /.vim/pythonx/__pycache__
+# history파일 보존필요없음. 설명 : https://stackoverflow.com/a/9850662/9457247
+/.vim/.netrwhist
 
 # Local configuration files
 *.local

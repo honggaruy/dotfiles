@@ -49,15 +49,19 @@ let g:session_autoload = 'no'
 """"""""""""""""""""""""""""""""
 " Anaconda로 py37 enviromment를 만든것을 가정함.
 " 아래 설정은 윈도우즈만 지원하는데 수정필요
-let $PYTHONHOME = "D:\\App\\Anaconda3\\envs\\py37"
-let $PATH.= ";".$PYTHONHOME
-let $PYTHONPATH = $PYTHONHOME."\\Lib;"
-let $PYTHONPATH.= $PYTHONHOME."\\DLLs;"
-set pythonthreehome=$PYTHONHOME
-set pythonthreedll=python37.dll
-" 파이썬 연동을 테스트하기 위해 아랫줄을 명령줄에서 실행해 보세요.
-" :py3 import sys; print(sys.version)
-" ultisnips 플러그인이 동작하기위해 파이썬 연동이 필요함.
+if has('nvim')
+    let g:python3_host_prog="d:/App/Anaconda3/envs/py37/python.exe"
+else
+    let $PYTHONHOME = "D:\\App\\Anaconda3\\envs\\py37"
+    let $PATH.= ";".$PYTHONHOME
+    let $PYTHONPATH = $PYTHONHOME."\\Lib;"
+    let $PYTHONPATH.= $PYTHONHOME."\\DLLs;"
+    set pythonthreehome=$PYTHONHOME
+    set pythonthreedll=python37.dll
+    " 파이썬 연동을 테스트하기 위해 아랫줄을 명령줄에서 실행해 보세요.
+    " :py3 import sys; print(sys.version)
+    " ultisnips 플러그인이 동작하기위해 파이썬 연동이 필요함.
+endif
 
 """"""""""""
 "  minpac  "
@@ -68,7 +72,6 @@ set pythonthreedll=python37.dll
 " Please check  http://vimcasts.org/episodes/ultisnips-python-interpolation/
 " and :help pythonx-directory
 
-
 function! PackInit() abort
 	" minpac is loaded.
 
@@ -78,10 +81,16 @@ function! PackInit() abort
 	" let minpac manage minpac, required
 	call minpac#add('k-takata/minpac', {'type': 'opt'})
 
+    " only for neovim
+    if has('nvim')
+        call minpac#add('equalsraf/neovim-gui-shim')
+    endif
+
 	" utils
 	call minpac#add('scrooloose/nerdtree')
 	call minpac#add('vimwiki/vimwiki')
 	call minpac#add('tyru/open-browser.vim')
+	call minpac#add('chrisbra/unicode.vim')
 
 	" session related
 	call minpac#add('mhinz/vim-startify')
@@ -101,6 +110,8 @@ function! PackInit() abort
 	call minpac#add('tpope/vim-surround')
 	call minpac#add('tpope/vim-unimpaired')
 	call minpac#add('tpope/vim-scriptease', {'type': 'opt'})
+	call minpac#add('tpope/vim-characterize')  " Unicode 관련 - ga command display modified
+	call minpac#add('tpope/vim-repeat')  " dot 명령 강화 
 
 	" Javascript, React, ES6 ... etc
 	call minpac#add('pangloss/vim-javascript')
@@ -133,7 +144,6 @@ source $VIMRUNTIME/vimrc_example.vim
 "source $VIMRUNTIME/mswin.vim
 "behave mswin
 set nobackup
-set number
 " https://github.com/johngrib/simple_vim_guide/blob/master/md/with_korean.md
 set noimd  " ESC 입력시 자동으로 영문 변환 
 " 'sessionoptions' == 'ssop', 디폴트에 'winpos' 옵션까지추가
@@ -141,10 +151,24 @@ set noimd  " ESC 입력시 자동으로 영문 변환
 " string 옵션에 기존 옵션에 추가로 설정시 방법 참조 :help set+=
 set ssop+=winpos
 
+"" line number 표시
+set number
+" Automatic toggling between line number modes, 참조: https://jeffkreeftmeijer.com/vim-number/#automatic-toggling-between-line-number-modes
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+    autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
+
 "" Editor 초기 사이즈및 폰트
 set lines=30 columns=200
 "set guifont=DejaVu_Sans_Mono_for_Powerline:h13:cHANGEUL:qCLEARTYPE
-set guifont=D2Coding:h12:qCLEARTYPE
+"set guifont=D2Coding:h12:qCLEARTYPE
+"set guifont=MesloLGM\ NF:h10:qCLEARTYPE
+set guifont=D2Coding\ Nerd:h12:qCLEARTYPE
+"set guifont=Iosevka\ NF:h12:w400:qCLEARTYPE,MesloLGM\ NF:h10
+"set guifont=CaskaydiaCove\ NF:h12:qCLEARTYPE,MesloLGM\ NF:h10
+set guifontwide=D2Coding\ ligature:h12:qCLEARTYPE
 
 "" 기본 tab , indent 설정
 set tabstop=2
@@ -247,6 +271,15 @@ let g:airline_powerline_fonts = 1
 let g:wedevicons_enable_startify = 1
 let g:wedevicons_enable_nerdtree = 1
 
+""" nerdtree 설정
+" prevent NerdTree re-positioning, https://stackoverflow.com/a/25575068/9457247
+set guioptions-=L
+
+""" neovide 설정 ( only for neovim )
+"
+if has('nvim')
+    let g:neovide_cursor_vfx_mode = "railgun"
+endif
 "" 단축키 등록 
 """ 설정파일 쉽게 열기 -- 시작 
 " 관련링크 : http://blog.naver.com/PostView.nhn?blogId=nfwscho&logNo=220686121995&parentCategoryNo=&categoryNo=&viewDate=&isShowPopularPosts=false&from=postView
@@ -300,3 +333,7 @@ command! -nargs=1 -complete=custom,PackList
 command! -nargs=1 -complete=custom,PackList
 		\ PackOpenUrl call PackInit() | call openbrowser#open(
 		\    minpac#getpluginfo(<q-args>).url)
+
+""" epub 설정
+" 발췌 링크: https://www.mobileread.com/forums/showthread.php?t=103114
+au BufReadCmd *.epub    call zip#Browse(expand("<amatch>"))

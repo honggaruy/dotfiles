@@ -9,3 +9,4 @@ function! LastModified()
     endif
 endfun
 autocmd BufWritePre <buffer> call LastModified()
+set sw=4 softtabstop=4
